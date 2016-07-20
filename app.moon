@@ -3,6 +3,7 @@ lapis = require "lapis"
 import respond_to, json_params from require "lapis.application"
 
 Users = require "models.Users"
+Stuffs = require "models.Stuffs"
 
 class extends lapis.Application
 	[githook: "/githook"]: respond_to {
@@ -26,7 +27,10 @@ class extends lapis.Application
             return status: 404
         POST: json_params =>
             user = Users\find id: @session.id
-            stuff = user\get_stuff!
+            unless stuff = user\get_stuff!
+                stuff = Stuffs\create {
+                    user_id: user.id
+                }
             return json: {
                 user: user
                 stuff: stuff
