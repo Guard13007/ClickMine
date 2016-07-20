@@ -14,7 +14,6 @@ class extends lapis.Application
                 os.execute "echo \"Updating server...\" >> logs/updates.log"
                 os.execute "git pull origin >> logs/updates.log"
                 os.execute "moonc . 2>> logs/updates.log"
-                os.execute "ldoc . >> logs/updates.log"
                 os.execute "lapis migrate production >> logs/updates.log"
                 os.execute "lapis build production >> logs/updates.log"
                 return { json: { status: "successful" } } --TODO scan for actual success (exit codes?), return a server error or whatever for errors
@@ -28,10 +27,12 @@ class extends lapis.Application
         POST: json_params =>
             user = Users\find id: @session.id
             stuff = user\get_stuff!
+
             unless stuff
                 stuff = Stuffs\create {
                     user_id: user.id
                 }
+
             return json: {
                 user: user
                 stuff: stuff
