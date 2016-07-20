@@ -58,7 +58,7 @@ class extends lapis.Application
                     li "do..."
                 ul id: "have", ->
                     li "you have..."
-    		ul ->
+    		ul id: "account", ->
 	    		if @session.id
 	    			li ->
 	    				a href: @url_for("logout"), "Log out!"
