@@ -4,7 +4,7 @@ var punch = $("<a href='#'>punch a tree</a>").click(function() {
     stuff.logs = stuff.logs + 1;
 
     if ($("#logs").length) {
-        $("#logs").replaceWidth("<li id='logs'>" + stuff.logs + " logs</li>");
+        $("#logs").replaceWith("<li id='logs'>" + stuff.logs + " logs</li>");
     } else {
         $("#have").append("<li id='logs'>" + stuff.logs + " logs</li>");
     }
