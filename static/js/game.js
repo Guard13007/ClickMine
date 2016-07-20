@@ -6,7 +6,7 @@ var actions = {
     },
     crafting_table: {
         uses: {wooden_planks: 4},
-        label: "make a crafting table",
+        label: "make a crafting table",   // make this make crafting craft more things at once ?
         once: true,
     },
     sticks: {
@@ -15,18 +15,24 @@ var actions = {
     },
     wooden_axe: {
         requires: {crafting_table: 1},
+        label: "make a wooden axe",    // this needs to increase the amount of wood you get per punch
         uses: {sticks: 2, wooden_planks: 3},
     },
 };
 
 for (stuff in actions) {
-    console.log(stuff);
-    console.log(actions[stuff]);
-    // copy uses into requires
-    // set count to 1 where it does not exist
-    // set once to false where it is not true
+    for (use in actions[stuff].uses) {
+        actions[stuff].requires[use] = actions[stuff].uses[use];
+    }
+    if (!actions[stuff].count) {
+        actions[stuff].count = 1;
+    }
+    if (!actions[stuff].once) {
+        actions[stuff].once = false;
+    }
     //TODO display appropriate content...which means this needs to be executed in loading!
 }
+console.log(actions);
 
 function act(stuff) {
     //
