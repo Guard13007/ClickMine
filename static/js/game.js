@@ -21,6 +21,9 @@ var actions = {
 };
 
 for (stuff in actions) {
+    if (!actions[stuff].requires) {
+        actions[stuff].requires = {};
+    }
     for (use in actions[stuff].uses) {
         actions[stuff].requires[use] = actions[stuff].uses[use];
     }
