@@ -21,9 +21,11 @@ var actions = {
 
 for (stuff in actions) {
     console.log(stuff);
+    console.log(actions[stuff]);
     // copy uses into requires
     // set count to 1 where it does not exist
     // set once to false where it is not true
+    //TODO display appropriate content...which means this needs to be executed in loading!
 }
 
 function act(stuff) {
@@ -47,8 +49,8 @@ var punch = $("<a href='#'>punch a tree</a>").click(function() {
 var save = function() {
     //TODO display error appended to #account when this fails
     $.post("https://clickmine.guard13007.com/update", {request: "stuff", stuff: stuff}, function(data, status) {
+        console.log("save: " + status);
         console.log(data);
-        console.log(status);
     });
 };
 
@@ -61,8 +63,6 @@ $(document).ready(function() {
     $("#do").append("<div id='loading'>loading...</div>");
 
     $.post("https://clickmine.guard13007.com/get", {request: "stuff"}, function(data, status) {
-        $("#loading").remove();
-
         if (status == "success") {
             stuff = data;
             $("#do").append(punch); //TODO we need to append all accessible options, not just punch
@@ -73,11 +73,16 @@ $(document).ready(function() {
 
             setTimeout(saveLoop, 60000);
 
+            console.log("load: " + status);
+            console.log(data);
+
         } else {
             $("#do").append("something went wrong, please try refreshing the page");
 
-            console.log(status);
+            console.log("save failed: " + status);
             console.log(data);
         }
+
+        $("#loading").remove();
     });
 });
