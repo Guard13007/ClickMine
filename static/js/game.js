@@ -1,6 +1,6 @@
 var stuff = {};
 
-var punch = $("<a>punch a tree</a>").click(function() {
+var punch = $("<a href='#'>punch a tree</a>").click(function() {
     stuff.logs = stuff.logs + 1;
 });
 
