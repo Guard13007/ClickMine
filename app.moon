@@ -6,6 +6,8 @@ Users = require "models.Users"
 Stuffs = require "models.Stuffs"
 
 class extends lapis.Application
+    layout: "layout"
+
 	[githook: "/githook"]: respond_to {
         GET: =>
             return status: 404
@@ -37,15 +39,25 @@ class extends lapis.Application
                 return json: stuff
     }
 
+    [update: "/update"]: respond_to {
+        GET: =>
+            return status: 404
+        POST: json_params =>
+            if @params.request == "stuff"
+                user = Users\find id: @session.id
+                stuff = user\get_stuff!
+                stuff\update @params.stuff
+                return json: { status: "success" }
+    }
+
     [index: "/"]: =>
     	@html ->
             if @session.id
-                script src: @build_url "static/js/jquery-3.1.0.min.js"
                 script src: @build_url "static/js/game.js"
                 ul id: "do", ->
-                    li "Do..."
+                    li "do..."
                 ul id: "have", ->
-                    li "You have:"
+                    li "you have..."
     		ul ->
 	    		if @session.id
 	    			li ->
