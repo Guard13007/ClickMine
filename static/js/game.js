@@ -12,7 +12,7 @@ $(document).ready(function() {
 
         if (status == "success") {
             stuff = data;
-            #("#do").append(punch);
+            $("#do").append(punch);
         } else {
             $("#do").append("something went wrong, please try refreshing the page");
         }
