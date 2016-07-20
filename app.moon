@@ -21,12 +21,25 @@ class extends lapis.Application
                 return { json: { status: "ignored non-master push" } }
     }
 
+    [get: "/get"]: respond_to {
+        GET: =>
+            return status: 404
+        POST: json_params =>
+            user = Users\find id: @session.id
+            return {
+                json: {
+                    user: user
+                }
+            }
+    }
+
     [index: "/"]: =>
     	@html ->
             if @session.id
                 script src: @build_url "static/js/jquery-3.1.0.min.js"
                 script src: @build_url "static/js/game.js"
-                ul id: "game"
+                ul id: "do"
+                ul id: "have"
     		ul ->
 	    		if @session.id
 	    			li ->
