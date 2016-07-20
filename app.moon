@@ -26,9 +26,7 @@ class extends lapis.Application
             return status: 404
         POST: json_params =>
             user = Users\find id: @session.id
-            return {
-                json: user
-            }
+            return json: user
     }
 
     [index: "/"]: =>
