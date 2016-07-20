@@ -25,19 +25,16 @@ class extends lapis.Application
         GET: =>
             return status: 404
         POST: json_params =>
-            user = Users\find id: @session.id
-            stuff = user\get_stuff!
+            if @params.request == "stuff"
+                user = Users\find id: @session.id
+                stuff = user\get_stuff!
 
-            unless stuff
-                stuff = Stuffs\create {
-                    user_id: user.id
-                }
+                unless stuff
+                    stuff = Stuffs\create {
+                        user_id: user.id
+                    }
 
-            return json: {
-                user: user
-                stuff: stuff
-                data: @params.fuck
-            }
+                return json: stuff
     }
 
     [index: "/"]: =>
