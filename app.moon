@@ -23,6 +23,10 @@ class extends lapis.Application
 
     [index: "/"]: =>
     	@html ->
+            if @session.id
+                script src: @build_url "static/js/jquery-3.1.0.min.js"
+                script src: @build_url "static/js/game.js"
+                ul id: "game"
     		ul ->
 	    		if @session.id
 	    			li ->
