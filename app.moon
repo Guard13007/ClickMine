@@ -27,9 +27,7 @@ class extends lapis.Application
         POST: json_params =>
             user = Users\find id: @session.id
             return {
-                json: {
-                    user: user
-                }
+                json: user
             }
     }
 
