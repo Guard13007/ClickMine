@@ -42,8 +42,10 @@ class extends lapis.Application
             if @session.id
                 script src: @build_url "static/js/jquery-3.1.0.min.js"
                 script src: @build_url "static/js/game.js"
-                ul id: "do"
-                ul id: "have"
+                ul id: "do", ->
+                    li "Do..."
+                ul id: "have", ->
+                    li "You have:"
     		ul ->
 	    		if @session.id
 	    			li ->
