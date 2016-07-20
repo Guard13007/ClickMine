@@ -27,7 +27,8 @@ class extends lapis.Application
             return status: 404
         POST: json_params =>
             user = Users\find id: @session.id
-            unless stuff = user\get_stuff!
+            stuff = user\get_stuff!
+            unless stuff
                 stuff = Stuffs\create {
                     user_id: user.id
                 }
