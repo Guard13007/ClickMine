@@ -26,3 +26,7 @@ class Users extends Model
 			if #value < 4
 				return "Your password must be at least 4 characters."
 	}
+
+    @relations: {
+        {"stuff", has_one: "Stuffs"}
+    }
