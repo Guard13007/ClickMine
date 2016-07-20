@@ -1,5 +1,35 @@
 var stuff = {};
 
+var actions = {
+    wooden_planks: {
+        uses: {logs: 1},
+    },
+    crafting_table: {
+        uses: {wooden_planks: 4},
+        label: "make a crafting table",
+        once: true,
+    },
+    sticks: {
+        uses: {wooden_planks: 2},
+        count: 4,
+    },
+    wooden_axe: {
+        requires: {crafting_table: 1},
+        uses: {sticks: 2, wooden_planks: 3},
+    },
+};
+
+for (stuff in actions) {
+    console.log(stuff);
+    // copy uses into requires
+    // set count to 1 where it does not exist
+    // set once to false where it is not true
+}
+
+function act(stuff) {
+    //
+}
+
 var punch = $("<a href='#'>punch a tree</a>").click(function() {
     stuff.logs = stuff.logs + 1;
 

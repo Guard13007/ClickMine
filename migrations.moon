@@ -38,4 +38,8 @@ import create_table, types, add_column, drop_column, drop_table from require "la
             {"saplings", types.integer default: 0}
             {"apples", types.integer default: 0}
         }
+
+    [5]: =>
+        add_column "stuffs", "wooden_planks", types.integer default: 0
+        add_column "stuffs", "crafting_tables", types.integer default: 0
 }
