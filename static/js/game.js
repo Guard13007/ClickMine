@@ -73,10 +73,12 @@ function updateAstuff(_stuff) {
 
 // this is called whenever a #do action is clicked
 function act(stuff_do) {
-    //TODO this needs to remove whatever resources are used to make the thing!
-    // = ==========================================================================================================================================================
+    // remove the resources that have been used
+    for (used in actions[stuff_do].uses) {
+        stuff[used] -= actions[stuff_do].uses[used];
+    }
 
-    stuff[stuff_do] += 1;
+    stuff[stuff_do] += actions[stuff_do].count;
 
     updateActions();
     updateAstuff(stuff_do);
