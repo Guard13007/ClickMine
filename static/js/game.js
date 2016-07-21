@@ -3,13 +3,15 @@ var stuff = {};
 
 // these are items in #do (they appear or disappear based on when they can be done)
 var actions = {
-    logs: {},
+    logs: {
+        label: "punch a tree",
+    },
     wooden_planks: {
         uses: {logs: 1},
         label: "make wooden planks",
         count: 4,
     },
-    /*
+    //*
     crafting_tables: {
         uses: {wooden_planks: 4},
         label: "make a crafting table",   //TODO? make this make crafting craft more things at once ?
@@ -25,8 +27,8 @@ var actions = {
         label: "make a wooden axe",    //TODO this needs to increase the amount of wood you get per punch
         uses: {sticks: 2, wooden_planks: 3},
     },
-    */
-    nopes: {},
+    //*/
+    //nopes: {},
 };
 
 // called to update what actions can be done
@@ -141,7 +143,7 @@ $(document).ready(function() {
         if (status == "success") {
             stuff = data;
 
-            $("#do").append("<li id='a_logs'><a href='#'>punch a tree</a></li>").click(function() { act("logs"); });
+            //$("#do").append("<li id='a_logs'><a href='#'>punch a tree</a></li>").click(function() { act("logs"); });
 
             setupActions();
 
