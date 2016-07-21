@@ -34,17 +34,20 @@ var actions = {
 // called to update what actions can be done
 function updateActions() {
     for (_stuff in actions) {
+        console.log("Current action: " + _stuff);
         var able = true;
 
         for (require in actions[_stuff].requires) {
             if (stuff[require] < actions[_stuff].requires[require]) {
                 able = false;
+                console.log("Action " + _stuff + " cannot be done!");
             }
         }
 
         // if it is able, and doesn't exist, add it
         if (able && !$("#a_" + _stuff).length) {
             if (_stuff != "nopes") { //NOTE this is due to a weird bug I can't figure out
+                console.log("Adding action " + _stuff);
                 $("#do").append("<li id='a_" + _stuff + "'><a href='#'>" + actions[_stuff].label + "</a></li>").click(function() { act(_stuff); });
             }
         }
@@ -52,6 +55,7 @@ function updateActions() {
         // if it exists, and is not able, remove it
         if ($("#a_" + _stuff).length && !able) {
             $("#a_" + _stuff).remove();
+            console.log("Removing action " + _stuff);
         }
     }
 }
@@ -154,7 +158,7 @@ $(document).ready(function() {
         if (status == "success") {
             stuff = data;
 
-            $("#do").append("<li id='a_logs'><a href='#'>punch a tree</a></li>").click(function() { act("logs"); });
+            //$("#do").append("<li id='a_logs'><a href='#'>punch a tree</a></li>").click(function() { act("logs"); });
 
             setupActions();
 
