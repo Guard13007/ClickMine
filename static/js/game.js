@@ -28,7 +28,7 @@ var actions = {
 // called to update what actions can be done
 function updateActions() {
     for (_stuff in actions) {
-        console.log(type(_stuff)); //TEMPORARY
+        console.log(typeof(_stuff)); //TEMPORARY
         var able = true;
 
         for (require in actions[_stuff].requires) {
