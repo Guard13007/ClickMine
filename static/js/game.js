@@ -3,7 +3,7 @@ var stuff = {};
 
 // these are items in #do (they appear or disappear based on when they can be done)
 var actions = {
-    //logs: {},   // DO NOT USE RAW SOURCES
+    logs: {},
     wooden_planks: {
         uses: {logs: 1},
         label: "make wooden planks",
@@ -90,9 +90,9 @@ var save = function() {
 
     $.post("https://clickmine.guard13007.com/update", {request: "stuff", stuff: stuff}, function(data, status) {
         if (status != "success") {
-            $("#status").replaceWith("<li id='status' style='color:red;'>something went wrong, please try saving again</li>").fadeOut(2000, function() { $("#status").remove(); });
+            $("#status").replaceWith("<li id='status' style='color:red;'>something went wrong, please try saving again</li>").fadeOut(1300, function() { $("#status").remove(); });
         } else {
-            $("#status").replaceWith("<li id='status' style='color:green;'>saved!</li>").fadeOut(2000, function() { $("#status").remove(); });
+            $("#status").replaceWith("<li id='status' style='color:green;'>saved!</li>").fadeOut(1300, function() { $("#status").remove(); });
         }
 
         console.log("save: " + status);
