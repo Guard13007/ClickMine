@@ -45,7 +45,7 @@ function updateActions() {
         }
 
         // if it is able, and doesn't exist, add it
-        if (able && !$("#a_" + _stuff).length) {
+        if (able && !($("#a_" + _stuff).length)) {
             if (_stuff != "nopes") { //NOTE this is due to a weird bug I can't figure out
                 console.log("Adding action " + _stuff); //tmp
                 $("#do").append("<li id='a_" + _stuff + "'><a href='#'>" + actions[_stuff].label + "</a></li>").click(function() { act(_stuff); });
