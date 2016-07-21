@@ -7,8 +7,9 @@ var actions = {
     wooden_planks: {
         uses: {logs: 1},
         label: "make wooden planks",
+        count: 4,
     },
-    crafting_table: {
+    crafting_tables: {
         uses: {wooden_planks: 4},
         label: "make a crafting table",   //TODO? make this make crafting craft more things at once ?
         once: true,
@@ -19,7 +20,7 @@ var actions = {
         count: 4,
     },
     wooden_axes: {
-        requires: {crafting_table: 1},
+        requires: {crafting_tables: 1},
         label: "make a wooden axe",    //TODO this needs to increase the amount of wood you get per punch
         uses: {sticks: 2, wooden_planks: 3},
     },
