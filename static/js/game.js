@@ -78,6 +78,7 @@ function act(stuff_do) {
     }
 
     stuff[stuff_do] += actions[stuff_do].count;
+    console.log(stuff_do + " increased by " + actions[stuff_do].count);
 
     updateActions();
     updateAstuff(stuff_do);
