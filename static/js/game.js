@@ -26,6 +26,7 @@ var actions = {
         uses: {sticks: 2, wooden_planks: 3},
     },
     */
+    nopes: {},
 };
 
 // called to update what actions can be done
