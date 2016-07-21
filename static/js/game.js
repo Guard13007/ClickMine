@@ -41,7 +41,7 @@ function updateActions() {
         }
 
         // if it is able, and doesn't exist, add it
-        if (able && !($("#a_" + _stuff).length)) {
+        if (able && $("#a_" + _stuff).length == 0) {
             console.log("Adding action " + _stuff); //tmp
             var str = _stuff + "";
             $("#do").append("<li id='a_" + _stuff + "'><a href='#'>" + actions[_stuff].label + "</a></li>").click(function() { act(str); });
