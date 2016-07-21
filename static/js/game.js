@@ -146,9 +146,9 @@ function setupActions() {
         if (!actions[_stuff].once) {
             actions[_stuff].once = false;
         }
-
-        updateActions();
     }
+
+    updateActions();
 }
 
 $(document).ready(function() {
