@@ -78,6 +78,7 @@ function act(stuff_do) {
     // remove the resources that have been used
     for (used in actions[stuff_do].uses) {
         stuff[used] -= actions[stuff_do].uses[used];
+        updateAstuff(used);
     }
 
     stuff[stuff_do] += actions[stuff_do].count;
