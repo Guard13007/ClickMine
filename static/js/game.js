@@ -19,11 +19,11 @@ var actions = {
         label: "make sticks",
         count: 4,
     },
-    wooden_axes: {
-        requires: {crafting_tables: 1},
-        label: "make a wooden axe",    //TODO this needs to increase the amount of wood you get per punch
-        uses: {sticks: 2, wooden_planks: 3},
-    },
+    //wooden_axes: {
+    //    requires: {crafting_tables: 1},
+    //    label: "make a wooden axe",    //TODO this needs to increase the amount of wood you get per punch
+    //    uses: {sticks: 2, wooden_planks: 3},
+    //},
 };
 
 // called to update what actions can be done
