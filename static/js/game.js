@@ -94,7 +94,7 @@ function act(stuff_do) {
     console.log(stuff_do); //tmp
     for (used in actions[stuff_do].uses) {
         stuff[used] -= actions[stuff_do].uses[used];
-        updateAstuff(used);
+        updateAstuff(used + "");
     }
 
     stuff[stuff_do] += actions[stuff_do].count;
@@ -164,7 +164,7 @@ $(document).ready(function() {
             setupActions();
 
             for (aStuff in stuff) {
-                updateAstuff(aStuff);
+                updateAstuff(aStuff + "");
             }
 
             $("#account").append("<a href='#'>manual save</a>").click(function(){save();});
