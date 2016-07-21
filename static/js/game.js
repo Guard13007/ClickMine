@@ -28,6 +28,7 @@ var actions = {
 // called to update what actions can be done
 function updateActions() {
     for (_stuff in actions) {
+        console.log(type(_stuff)); //TEMPORARY
         var able = true;
 
         for (require in actions[_stuff].requires) {
@@ -87,9 +88,9 @@ var save = function() {
 
     $.post("https://clickmine.guard13007.com/update", {request: "stuff", stuff: stuff}, function(data, status) {
         if (status != "success") {
-            $("#status").replaceWith("<li id='status' style='color:red;'>something went wrong, please try saving again</li>").fadeOut(5000, function() { $("#status").remove(); });
+            $("#status").replaceWith("<li id='status' style='color:red;'>something went wrong, please try saving again</li>").fadeOut(2000, function() { $("#status").remove(); });
         } else {
-            $("#status").replaceWith("<li id='status' style='color:green;'>saved!</li>").fadeOut(5000, function() { $("#status").remove(); });
+            $("#status").replaceWith("<li id='status' style='color:green;'>saved!</li>").fadeOut(2000, function() { $("#status").remove(); });
         }
 
         console.log("save: " + status);
