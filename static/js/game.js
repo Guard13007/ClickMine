@@ -48,9 +48,7 @@ function updateActions() {
         if (able && !($("#a_" + _stuff).length)) {
             if (_stuff != "nopes") { //NOTE this is due to a weird bug I can't figure out
                 console.log("Adding action " + _stuff); //tmp
-                var VALUE = _stuff + "";
-                console.log(VALUE);
-                $("#do").append("<li id='a_" + _stuff + "'><a href='#'>" + actions[_stuff].label + "</a></li>").click(function() { act(VALUE); });
+                $("#do").append("<li id='a_" + _stuff + "'><a href='#'>" + actions[_stuff].label + "</a></li>").click(function() { act(_stuff + ""); });
             }
         }
 
@@ -161,7 +159,7 @@ $(document).ready(function() {
         if (status == "success") {
             stuff = data;
 
-            $("#do").append("<li id='a_logs'><a href='#'>punch a tree</a></li>").click(function() { act("logs"); });
+            //$("#do").append("<li id='a_logs'><a href='#'>punch a tree</a></li>").click(function() { act("logs"); });
 
             setupActions();
 
