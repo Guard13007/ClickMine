@@ -11,7 +11,6 @@ var actions = {
         label: "make wooden planks",
         count: 4,
     },
-    //*
     crafting_tables: {
         uses: {wooden_planks: 4},
         label: "make a crafting table",   //TODO? make this make crafting craft more things at once ?
@@ -27,8 +26,9 @@ var actions = {
         label: "make a wooden axe",    //TODO this needs to increase the amount of wood you get per punch
         uses: {sticks: 2, wooden_planks: 3},
     },
-    //*/
-    //nopes: {},
+
+    //NOTE this is due to a weird bug I can't figure out
+    nopes: {},
 };
 
 // called to update what actions can be done
@@ -44,7 +44,9 @@ function updateActions() {
 
         // if it is able, and doesn't exist, add it
         if (able && !$("#a_" + _stuff).length) {
-            $("#do").append("<li id='a_" + _stuff + "'><a href='#'>" + actions[_stuff].label + "</a></li>").click(function() { act(_stuff); });
+            if (_stuff != "nopes") { //NOTE this is due to a weird bug I can't figure out
+                $("#do").append("<li id='a_" + _stuff + "'><a href='#'>" + actions[_stuff].label + "</a></li>").click(function() { act(_stuff); });
+            }
         }
 
         // if it exists, and is not able, remove it
@@ -56,6 +58,9 @@ function updateActions() {
 
 // call to update a stuff to be shown or not
 function updateAstuff(_stuff) {
+    //NOTE this is due to a weird bug I can't figure out
+    if (_stuff == "nopes") return;
+
     if (stuff[_stuff] > 0) {
         stuff_display = "<li id='s_" + _stuff + "'>" + stuff[_stuff] + " " + _stuff;
         if (stuff[_stuff] == 1) {
@@ -78,6 +83,9 @@ function updateAstuff(_stuff) {
 
 // this is called whenever a #do action is clicked
 function act(stuff_do) {
+    //NOTE this is due to a weird bug I can't figure out
+    if (stuff_do == "nopes") return;
+
     // remove the resources that have been used
     for (used in actions[stuff_do].uses) {
         stuff[used] -= actions[stuff_do].uses[used];
@@ -93,6 +101,9 @@ function act(stuff_do) {
 
 // saves your game to the server and notifies of success/failure
 var save = function() {
+    //NOTE this is due to a weird bug I can't figure out
+    stuff.nopes = null;
+
     $("#account").append("<li id='status'>saving...</li>");
 
     $.post("https://clickmine.guard13007.com/update", {request: "stuff", stuff: stuff}, function(data, status) {
