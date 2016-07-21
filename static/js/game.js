@@ -1,97 +1,157 @@
+// this is where actual amounts of items are stored
 var stuff = {};
 
+// these are items in #do (they appear or disappear based on when they can be done)
 var actions = {
+    //logs: {},   // DO NOT USE RAW SOURCES
     wooden_planks: {
         uses: {logs: 1},
+        label: "make wooden planks",
     },
     crafting_table: {
         uses: {wooden_planks: 4},
-        label: "make a crafting table",   // make this make crafting craft more things at once ?
+        label: "make a crafting table",   //TODO? make this make crafting craft more things at once ?
         once: true,
     },
     sticks: {
         uses: {wooden_planks: 2},
+        label: "make sticks",
         count: 4,
     },
-    wooden_axe: {
+    wooden_axes: {
         requires: {crafting_table: 1},
-        label: "make a wooden axe",    // this needs to increase the amount of wood you get per punch
+        label: "make a wooden axe",    //TODO this needs to increase the amount of wood you get per punch
         uses: {sticks: 2, wooden_planks: 3},
     },
 };
 
-for (stuff in actions) {
-    if (!actions[stuff].requires) {
-        actions[stuff].requires = {};
+// called to update what actions can be done
+function updateActions() {
+    for (_stuff in actions) {
+        var able = true;
+
+        for (require in actions[_stuff].requires) {
+            if (stuff[require] < actions[_stuff].requires[require]) {
+                able = false;
+            }
+        }
+
+        // if it is able, and doesn't exist, add it
+        if (able && !$("#a_" + _stuff).length) {
+            $("#do").append("<li id='#a_" + _stuff + "'><a href='#'>" + actions[_stuff].label + "</a></li>").click(function() { act(_stuff); });
+        }
+
+        // if it exists, and is not able, remove it
+        if ($("#a_" + _stuff).length && !able) {
+            $("#a_" + _stuff).remove();
+        }
     }
-    for (use in actions[stuff].uses) {
-        actions[stuff].requires[use] = actions[stuff].uses[use];
-    }
-    if (!actions[stuff].count) {
-        actions[stuff].count = 1;
-    }
-    if (!actions[stuff].once) {
-        actions[stuff].once = false;
-    }
-    //TODO display appropriate content...which means this needs to be executed in loading!
 }
-console.log(actions);
 
-function act(stuff) {
-    //
-}
+// call to update a stuff to be shown or not
+function updateAstuff(_stuff) {
+    if (stuff[_stuff] > 0) {
+        stuff_display = "<li id='s_" + _stuff + "'>" + stuff[_stuff] + " " + _stuff;
+        if (stuff[_stuff] == 1) {
+            stuff_display = stuff_display.substring(0, stuff_display.length - 1);
+        }
 
-var punch = $("<a href='#'>punch a tree</a>").click(function() {
-    stuff.logs = stuff.logs + 1;
+        stuff_display += "</li>";
 
-    //TODO this nees to be a function I can just call
-    if ($("#logs").length) {
-        $("#logs").replaceWith("<li id='logs'>" + stuff.logs + " logs</li>");
+        if ($("#s_" + _stuff).length) {
+            $("#s_" + _stuff).replaceWith(stuff_display);
+        } else {
+            $("#have").append(stuff_display);
+        }
     } else {
-        $("#have").append("<li id='logs'>" + stuff.logs + " logs</li>");
+        if ($("#s_" + _stuff).length) {
+            $("#s_" + _stuff).remove();
+        }
     }
+}
 
-    //TODO this also needs to be able to check if we've unlocked anything and append it
-    //TODO this also needs to check if we've LOCKED something and remove it
-});
+// this is called whenever a #do action is clicked
+function act(stuff_do) {
+    //TODO this needs to remove whatever resources are used to make the thing!
+    // = ==========================================================================================================================================================
 
+    stuff[stuff_do] += 1;
+
+    updateActions();
+    updateAstuff(stuff_do);
+}
+
+// saves your game to the server and notifies of success/failure
 var save = function() {
-    //TODO display error appended to #account when this fails
+    $("#account").append("<li id='status'>saving...</li>");
+
     $.post("https://clickmine.guard13007.com/update", {request: "stuff", stuff: stuff}, function(data, status) {
+        if (status != "success") {
+            $("#status").replaceWith("<li id='status' style='color:red;'>something went wrong, please try saving again</li>").fadeOut(500, function() { $("#status").remove(); });
+        } else {
+            $("#status").replaceWith("<li id='status' style='color:green;'>saved!</li>").fadeOut(500, function() { $("#status").remove(); });
+        }
+
         console.log("save: " + status);
         console.log(data);
     });
 };
 
+// every 60 seconds, the game autosaves
 function saveLoop() {
     save();
     setTimeout(saveLoop, 60000);
 }
 
+// this helper makes sure all actions are complete
+function setupActions() {
+    for (_stuff in actions) {
+        if (!actions[_stuff].requires) {
+            actions[_stuff].requires = {};
+        }
+        if (!actions[_stuff].uses) {
+            actions[_stuff].uses = {};
+        }
+        for (use in actions[_stuff].uses) {
+            actions[_stuff].requires[use] = actions[_stuff].uses[use];
+        }
+        if (!actions[_stuff].count) {
+            actions[_stuff].count = 1;
+        }
+        if (!actions[_stuff].once) {
+            actions[_stuff].once = false;
+        }
+
+        updateActions();
+    }
+}
+
 $(document).ready(function() {
-    $("#do").append("<div id='loading'>loading...</div>");
+    $("#do").append("<div id='status'>loading...</div>");
 
     $.post("https://clickmine.guard13007.com/get", {request: "stuff"}, function(data, status) {
         if (status == "success") {
             stuff = data;
-            $("#do").append(punch); //TODO we need to append all accessible options, not just punch
 
-            //TODO now we need to append haves, use function that needs to be developed above
+            $("#do").append("<li id='#s_logs'><a href='#'>punch a tree</a></li>").click(function() { act(_stuff); });
 
-            $("#account").append("<a href='#'>save</a>").click(function(){save();});
+            setupActions();
+
+            for (aStuff in stuff) {
+                updateAstuff(aStuff);
+            }
+
+            $("#account").append("<a href='#'>manual save</a>").click(function(){save();});
 
             setTimeout(saveLoop, 60000);
 
-            console.log("load: " + status);
-            console.log(data);
-
         } else {
             $("#do").append("something went wrong, please try refreshing the page");
-
-            console.log("save failed: " + status);
-            console.log(data);
         }
 
-        $("#loading").remove();
+        $("#status").remove();
+
+        console.log("load: " + status);
+        console.log(data);
     });
 });

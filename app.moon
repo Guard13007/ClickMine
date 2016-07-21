@@ -59,14 +59,15 @@ class extends lapis.Application
                 ul id: "have", ->
                     li "you have..."
     		ul id: "account", ->
+                li "account..."
 	    		if @session.id
 	    			li ->
-	    				a href: @url_for("logout"), "Log out!"
+	    				a href: @url_for("logout"), "log out"
 	    		else
 		    		li ->
-    		    		a href: @url_for("create_user"), "Make an account."
+    		    		a href: @url_for("create_user"), "make account"
     				li ->
-    					a href: @url_for("login"), "Log in!"
+    					a href: @url_for("login"), "log in"
 
     [create_user: "/create_user"]: respond_to {
     	GET: =>
@@ -76,9 +77,9 @@ class extends lapis.Application
     				method: "POST",
     				enctype: "multipart/form-data"
     			}, ->
-    				p "Username: "
+    				p "username: "
     				input type: "text", name: "user"
-    				p "Password: "
+    				p "password: "
     				input type: "password", name: "password"
     				br!
     				input type: "submit"
@@ -102,9 +103,9 @@ class extends lapis.Application
     				method: "POST"
     				enctype: "multipart/form-data"
     			}, ->
-    				p "Username: "
+    				p "username: "
     				input type: "text", name: "user"
-    				p "Password: "
+    				p "password: "
     				input type: "password", name: "password"
     				br!
     				input type: "submit"
