@@ -38,7 +38,7 @@ function updateActions() {
 
         // if it is able, and doesn't exist, add it
         if (able && !$("#a_" + _stuff).length) {
-            $("#do").append("<li id='#a_" + _stuff + "'><a href='#'>" + actions[_stuff].label + "</a></li>").click(function() { act(_stuff); });
+            $("#do").append("<li id='a_" + _stuff + "'><a href='#'>" + actions[_stuff].label + "</a></li>").click(function() { act(_stuff); });
         }
 
         // if it exists, and is not able, remove it
@@ -87,9 +87,9 @@ var save = function() {
 
     $.post("https://clickmine.guard13007.com/update", {request: "stuff", stuff: stuff}, function(data, status) {
         if (status != "success") {
-            $("#status").replaceWith("<li id='status' style='color:red;'>something went wrong, please try saving again</li>").fadeOut(500, function() { $("#status").remove(); });
+            $("#status").replaceWith("<li id='status' style='color:red;'>something went wrong, please try saving again</li>").fadeOut(5000, function() { $("#status").remove(); });
         } else {
-            $("#status").replaceWith("<li id='status' style='color:green;'>saved!</li>").fadeOut(500, function() { $("#status").remove(); });
+            $("#status").replaceWith("<li id='status' style='color:green;'>saved!</li>").fadeOut(5000, function() { $("#status").remove(); });
         }
 
         console.log("save: " + status);
@@ -133,7 +133,7 @@ $(document).ready(function() {
         if (status == "success") {
             stuff = data;
 
-            $("#do").append("<li id='#s_logs'><a href='#'>punch a tree</a></li>").click(function() { act(_stuff); });
+            $("#do").append("<li id='a_logs'><a href='#'>punch a tree</a></li>").click(function() { act("logs"); });
 
             setupActions();
 

@@ -36,6 +36,8 @@ class extends lapis.Application
                         user_id: user.id
                     }
 
+                stuff.id = nil
+                stuff.user_id = nil
                 return json: stuff
     }
 
