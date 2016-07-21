@@ -91,6 +91,7 @@ function act(stuff_do) {
     if (stuff_do == "nopes") return;
 
     // remove the resources that have been used
+    console.log(stuff_do); //tmp
     for (used in actions[stuff_do].uses) {
         stuff[used] -= actions[stuff_do].uses[used];
         updateAstuff(used);
