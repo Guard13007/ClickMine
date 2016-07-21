@@ -102,7 +102,7 @@ function act(stuff_do) {
 // saves your game to the server and notifies of success/failure
 var save = function() {
     //NOTE this is due to a weird bug I can't figure out
-    stuff.nopes = null;
+    delete stuff.nopes;
 
     $("#account").append("<li id='status'>saving...</li>");
 
@@ -153,8 +153,6 @@ $(document).ready(function() {
     $.post("https://clickmine.guard13007.com/get", {request: "stuff"}, function(data, status) {
         if (status == "success") {
             stuff = data;
-
-            //$("#do").append("<li id='a_logs'><a href='#'>punch a tree</a></li>").click(function() { act("logs"); });
 
             setupActions();
 
