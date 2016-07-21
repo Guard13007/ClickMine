@@ -9,6 +9,7 @@ var actions = {
         label: "make wooden planks",
         count: 4,
     },
+    /*
     crafting_tables: {
         uses: {wooden_planks: 4},
         label: "make a crafting table",   //TODO? make this make crafting craft more things at once ?
@@ -19,11 +20,12 @@ var actions = {
         label: "make sticks",
         count: 4,
     },
-    //wooden_axes: {
-    //    requires: {crafting_tables: 1},
-    //    label: "make a wooden axe",    //TODO this needs to increase the amount of wood you get per punch
-    //    uses: {sticks: 2, wooden_planks: 3},
-    //},
+    wooden_axes: {
+        requires: {crafting_tables: 1},
+        label: "make a wooden axe",    //TODO this needs to increase the amount of wood you get per punch
+        uses: {sticks: 2, wooden_planks: 3},
+    },
+    */
 };
 
 // called to update what actions can be done
