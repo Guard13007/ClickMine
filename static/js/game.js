@@ -26,15 +26,11 @@ var actions = {
         label: "make a wooden axe",    //TODO this needs to increase the amount of wood you get per punch
         uses: {sticks: 2, wooden_planks: 3},
     },
-
-    //NOTE this is due to a weird bug I can't figure out
-    nopes: {},
 };
 
 // called to update what actions can be done
 function updateActions() {
     for (_stuff in actions) {
-        //console.log("Current action: " + _stuff); //tmp
         var able = true;
 
         for (require in actions[_stuff].requires) {
@@ -46,11 +42,10 @@ function updateActions() {
 
         // if it is able, and doesn't exist, add it
         if (able && !($("#a_" + _stuff).length)) {
-            if (_stuff != "nopes") { //NOTE this is due to a weird bug I can't figure out
-                console.log("Adding action " + _stuff); //tmp
-                var str = _stuff + "";
-                $("#do").append("<li id='a_" + _stuff + "'><a href='#'>" + actions[_stuff].label + "</a></li>").click(function() { act(str); });
-            }
+            console.log("Adding action " + _stuff); //tmp
+            var str = _stuff + "";
+            $("#do").append("<li id='a_" + _stuff + "'><a href='#'>" + actions[_stuff].label + "</a></li>").click(function() { act(str); });
+            //$("#do").append("<li id='a_logs'><a href='#'>punch a tree</a></li>").click(function() { act("logs"); });
         }
 
         // if it exists, and is not able, remove it
@@ -63,9 +58,6 @@ function updateActions() {
 
 // call to update a stuff to be shown or not
 function updateAstuff(_stuff) {
-    //NOTE this is due to a weird bug I can't figure out
-    if (_stuff == "nopes") return;
-
     if (stuff[_stuff] > 0) {
         stuff_display = "<li id='s_" + _stuff + "'>" + stuff[_stuff] + " " + _stuff;
         if (stuff[_stuff] == 1) {
@@ -88,9 +80,6 @@ function updateAstuff(_stuff) {
 
 // this is called whenever a #do action is clicked
 function act(stuff_do) {
-    //NOTE this is due to a weird bug I can't figure out
-    if (stuff_do == "nopes") return;
-
     // remove the resources that have been used
     console.log(stuff_do); //tmp
     for (used in actions[stuff_do].uses) {
@@ -107,9 +96,6 @@ function act(stuff_do) {
 
 // saves your game to the server and notifies of success/failure
 var save = function() {
-    //NOTE this is due to a weird bug I can't figure out
-    delete stuff.nopes;
-
     $("#account").append("<li id='status'>saving...</li>");
 
     $.post("https://clickmine.guard13007.com/update", {request: "stuff", stuff: stuff}, function(data, status) {
@@ -159,8 +145,6 @@ $(document).ready(function() {
     $.post("https://clickmine.guard13007.com/get", {request: "stuff"}, function(data, status) {
         if (status == "success") {
             stuff = data;
-
-            //$("#do").append("<li id='a_logs'><a href='#'>punch a tree</a></li>").click(function() { act("logs"); });
 
             setupActions();
 
