@@ -158,7 +158,7 @@ $(document).ready(function() {
         if (status == "success") {
             stuff = data;
 
-            //$("#do").append("<li id='a_logs'><a href='#'>punch a tree</a></li>").click(function() { act("logs"); });
+            $("#do").append("<li id='a_logs'><a href='#'>punch a tree</a></li>").click(function() { act("logs"); });
 
             setupActions();
 
