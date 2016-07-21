@@ -34,7 +34,7 @@ var actions = {
 // called to update what actions can be done
 function updateActions() {
     for (_stuff in actions) {
-        console.log("Current action: " + _stuff); //tmp
+        //console.log("Current action: " + _stuff); //tmp
         var able = true;
 
         for (require in actions[_stuff].requires) {
@@ -48,7 +48,9 @@ function updateActions() {
         if (able && !($("#a_" + _stuff).length)) {
             if (_stuff != "nopes") { //NOTE this is due to a weird bug I can't figure out
                 console.log("Adding action " + _stuff); //tmp
-                $("#do").append("<li id='a_" + _stuff + "'><a href='#'>" + actions[_stuff].label + "</a></li>").click(function() { act(toString(_stuff)); });
+                var VALUE = toString(_stuff);
+                console.log(VALUE);
+                $("#do").append("<li id='a_" + _stuff + "'><a href='#'>" + actions[_stuff].label + "</a></li>").click(function() { act(VALUE); });
             }
         }
 
