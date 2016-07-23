@@ -1,13 +1,9 @@
 // These are displayed under "do..." when available
 var Actions = {
     logs: {
-        requires: {}, //
-        uses: {}, //
         label: "punch a tree",
-        count: 1, //
     },
     wooden_planks: {
-        requires: {logs: 1}, //
         uses: {logs: 1},
         label: "make wooden planks",
         count: 4,
@@ -103,6 +99,24 @@ function act(gained_resource) {
 
 // Okay, let's get started!
 $(document).ready(function() {
+    // fill out Actions table with defaults
+    for (action in Actions) {
+        if (!Actions[action].requires) {
+            Actions[action].requires = {};
+        }
+        if (!Actions[action].uses) {
+            Actions[action].uses = {};
+        }
+        if (!Actions[action].count) {
+            Actions[action].count = 1;
+        }
+        for (resource in Actions[action].uses) {
+            str_resource = resource + "";
+            Actions[action].requires[str_resource] = Actions[action].uses[resource];
+        }
+    }
+
+    // update displayed info
     updateActionsDisplay();
     updateResourcesDisplay();
 });
