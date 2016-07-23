@@ -170,9 +170,14 @@ $(document).ready(function() {
             updateActionsDisplay();
             updateResourcesDisplay();
 
-            $("#account").append("<li><a href='#'>save manually</a>").click(function() { save(); });
+            $("#account").append("<li><a href='#'>save</a>").click(function() { save(); });
 
             setTimeout(saveLoop, 60000);
+
+            //$(window).bind('beforeunload', function() {
+            //    save();
+            //});
+            window.onbeforeunload = function() { save(); }; // apparently this is the way to do it...
 
         } else {
             $("#status").replaceWith("<li id='status'>something went wrong, please try refreshing the page</li>");
