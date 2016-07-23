@@ -108,8 +108,31 @@ function act(gained_resource) {
     updateActionsDisplay();
 }
 
+// Saves your game and notifies success/failure
+function save() {
+    $("#account").append("<li id='status'>saving...</li>");
+
+    $.post("https://clickmine.guard13007.com/update", {request: "resources", resources: Resources}, function(data, status) {
+        if (status == "success") {
+            $("#status").replaceWith("<li id='status' style='color:green;'>saved!</li>").fadeOut(1300, function() { $("#status").remove(); });
+        } else {
+            $("#status").replaceWith("<li id='status' style='color:red;'>something went wrong, please try saving again</li>").fadeOut(3000, function() { $("#status").remove(); });
+        }
+
+        console.log("save: " + status);
+        console.log(data);
+    });
+}
+
+function saveLoop() {
+    save();
+    setTimeout(saveLoop, 60000);
+}
+
 // Okay, let's get started!
 $(document).ready(function() {
+    $("#do").append("<li id='status'>loading...</li>");
+
     // fill out Actions table with defaults
     for (action in Actions) {
         if (!Actions[action].requires) {
@@ -133,7 +156,29 @@ $(document).ready(function() {
         }
     }
 
-    // update displayed info
-    updateActionsDisplay();
-    updateResourcesDisplay();
+    $.post("https://clickmine.guard13007.com/get", {request: "resources"}, function(data, status) {
+        if (status == "success") {
+            // load data
+            for (resource in data) {
+                str_resource = resource + "";
+                Resources[str_resource] = data[resource];
+            }
+
+            $("#status").remove();
+
+            // update displayed info
+            updateActionsDisplay();
+            updateResourcesDisplay();
+
+            $("#account").append("<li><a href='#'>save manually</a>").click(function() { save(); });
+
+            setTimeout(saveLoop, 60000);
+
+        } else {
+            $("#status").replaceWith("<li id='status'>something went wrong, please try refreshing the page</li>");
+        }
+
+        console.log("load: " + status);
+        console.log(data);
+    });
 });
