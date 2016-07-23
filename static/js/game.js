@@ -15,7 +15,10 @@ var Actions = {
 };
 
 // These are displayed under "have..." when available
-var Resources = {};
+var Resources = {
+    logs: 0,
+    wooden_planks: 0,
+};
 
 // Updates displayed Actions under "do..."
 function updateActionsDisplay(action_name) {
