@@ -18,6 +18,7 @@ var Actions = {
 var Resources = {
     logs: 0,
     wooden_planks: 0,
+    crafting_tables: 0,
 };
 
 // Updates displayed Actions under "do..."
