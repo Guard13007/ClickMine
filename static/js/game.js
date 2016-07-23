@@ -17,6 +17,11 @@ var Actions = {
         label: "make sticks",
         count: 4,
     },
+    wooden_axes: {
+        requires: {crafting_tables: 1},
+        uses: {sticks: 2, wooden_planks: 3},
+        label: "make a wooden axe",
+    },
 };
 
 // These are displayed under "have..." when available
@@ -68,7 +73,7 @@ function updateResourcesDisplay(resource_name) {
 
     // <li id='r_NAME'># NAME(s)</li>
     if (Resources[resource_name] > 0) {
-        output = "<li id='r_" + resource_name + "'>" + Resources[resource_name] + " " + resource_name;
+        output = "<li id='r_" + resource_name + "'>" + Resources[resource_name] + " " + resource_name.replace("_", " ");
         if (Resources[resource_name] == 1) {
             output = output.substring(0, output.length - 1);
         }
