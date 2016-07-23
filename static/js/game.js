@@ -11,15 +11,16 @@ var Actions = {
     crafting_tables: {
         uses: {wooden_planks: 4},
         label: "make a crafting table",
-    }
+    },
+    sticks: {
+        uses: {wooden_planks: 2},
+        label: "make sticks",
+        count: 4,
+    },
 };
 
 // These are displayed under "have..." when available
-var Resources = {
-    logs: 0,
-    wooden_planks: 0,
-    crafting_tables: 0,
-};
+var Resources = {};
 
 // Updates displayed Actions under "do..."
 function updateActionsDisplay(action_name) {
@@ -115,9 +116,15 @@ $(document).ready(function() {
         if (!Actions[action].count) {
             Actions[action].count = 1;
         }
+
         for (resource in Actions[action].uses) {
             str_resource = resource + "";
             Actions[action].requires[str_resource] = Actions[action].uses[resource];
+        }
+
+        str_action = action + "";
+        if (!Resources[str_action]) {
+            Resources[str_action] = 0;
         }
     }
 
