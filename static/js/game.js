@@ -89,9 +89,9 @@ function updateResourcesDisplay(resource_name) {
 function act(gained_resource) {
     for (used_resource in Actions[gained_resource].uses) {
         // remove used resources
+        str_used_resource = used_resource + "";
         Resources[str_used_resource] -= Actions[gained_resource].uses[used_resource];
         // update display of used resources
-        str_used_resource = used_resource + "";
         updateResourcesDisplay(str_used_resource);
     }
 
