@@ -3,7 +3,7 @@ lapis = require "lapis"
 import respond_to, json_params from require "lapis.application"
 
 Users = require "models.Users"
-Stuffs = require "models.Stuffs"
+Resources = require "models.Resources"
 
 class extends lapis.Application
     layout: "layout"
@@ -32,30 +32,32 @@ class extends lapis.Application
 
     [get: "/get"]: respond_to {
         GET: =>
-            return status: 404
-        POST: json_params =>
-            if @params.request == "stuff"
-                user = Users\find id: @session.id
-                stuff = user\get_stuff!
+            return status: 405
 
-                unless stuff
-                    stuff = Stuffs\create {
+        POST: json_params =>
+            if @params.request == "resources"
+                user = Users\find id: @session.id
+                resources = user\get_resources!
+
+                unless resources
+                    resources = Resources\create {
                         user_id: user.id
                     }
 
-                stuff.id = nil
-                stuff.user_id = nil
-                return json: stuff
+                resources.id = nil
+                resources.user_id = nil
+                return json: resources
     }
 
     [update: "/update"]: respond_to {
         GET: =>
-            return status: 404
+            return status: 405
+
         POST: json_params =>
-            if @params.request == "stuff"
+            if @params.request == "resources"
                 user = Users\find id: @session.id
-                stuff = user\get_stuff!
-                stuff\update @params.stuff
+                resources = user\get_resources!
+                resources\update @params.resources
                 return json: { status: "success" }
     }
 
@@ -92,6 +94,7 @@ class extends lapis.Application
     				input type: "password", name: "password"
     				br!
     				input type: "submit"
+
     	POST: =>
 			user, errMsg = Users\create {
 				name: @params.user
@@ -118,6 +121,7 @@ class extends lapis.Application
     				input type: "password", name: "password"
     				br!
     				input type: "submit"
+
     	POST: =>
 			if user = Users\find name: @params.user
 				if user.password == @params.password

@@ -1,4 +1,4 @@
-import create_table, types, add_column, drop_column, drop_table from require "lapis.db.schema"
+import create_table, types, add_column, drop_column, drop_table, rename_table from require "lapis.db.schema"
 
 {
 	[1]: =>
@@ -46,4 +46,7 @@ import create_table, types, add_column, drop_column, drop_table from require "la
     [6]: =>
         add_column "stuffs", "sticks", types.integer default: 0
         add_column "stuffs", "wooden_axes", types.integer default: 0
+
+    [7]: =>
+        rename_table "stuffs", "resources"
 }

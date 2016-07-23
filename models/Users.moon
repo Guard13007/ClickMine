@@ -23,10 +23,10 @@ class Users extends Model
 			if #value == 0
 				return "You must have a password."
 
-			if #value < 4
-				return "Your password must be at least 4 characters."
+			if #value < 8
+				return "Your password must be at least 8 characters."
 	}
 
     @relations: {
-        {"stuff", has_one: "Stuffs"}
+        {"resources", has_one: "Resources"}
     }
