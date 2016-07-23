@@ -8,6 +8,10 @@ var Actions = {
         label: "make wooden planks",
         count: 4,
     },
+    crafting_tables: {
+        uses: {wooden_planks: 4},
+        label: "make a crafting table",
+    }
 };
 
 // These are displayed under "have..." when available
