@@ -103,7 +103,7 @@ function updateResourcesDisplay(resource_name) {
     // <li id='r_NAME'># NAME(s)</li>
     if (Resources[resource_name] > 0) {
         output = "<li id='r_" + resource_name + "'>" + Resources[resource_name] + " " + resource_name.replace("_", " ");
-        if ((Resources[resource_name] == 1) and !Resources[resource_name].singular_name) {
+        if ((Resources[resource_name] == 1) && Actions[resource_name] && !Actions[resource_name].singular_name) {
             output = output.substring(0, output.length - 1);
         }
 
