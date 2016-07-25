@@ -2,6 +2,7 @@
 var Actions = {
     logs: {
         label: "punch a tree",
+        random: {saplings: 1/6, apples: 1/30},
     },
     wooden_planks: {
         uses: {logs: 1},
@@ -25,7 +26,10 @@ var Actions = {
 };
 
 // These are displayed under "have..." when available
-var Resources = {};
+var Resources = {
+    saplings: 0,
+    apples: 0,
+};
 
 // Updates displayed Actions under "do..."
 function updateActionsDisplay(action_name) {
@@ -102,8 +106,18 @@ function act(gained_resource) {
         updateResourcesDisplay(str_used_resource);
     }
 
+    // update gained resource
     Resources[gained_resource] += Actions[gained_resource].count;
     updateResourcesDisplay(gained_resource);
+
+    // check for and get random resources
+    for (random_resource in Actions[gained_resource].random) {
+        if (Math.random() < Actions[gained_resource].random[random_resource]) {
+            str_random_resource = random_resource + "";
+            Resources[str_random_resource] += 1; //hardcoded..not good :/
+            updateResourcesDisplay(str_random_resource);
+        }
+    }
 
     updateActionsDisplay();
 }
@@ -141,6 +155,9 @@ $(document).ready(function() {
         if (!Actions[action].uses) {
             Actions[action].uses = {};
         }
+        if (!Actions[action].random) {
+            Actions[action].random = {};
+        }
         if (!Actions[action].count) {
             Actions[action].count = 1;
         }
@@ -174,9 +191,6 @@ $(document).ready(function() {
 
             setTimeout(saveLoop, 60000);
 
-            //$(window).bind('beforeunload', function() {
-            //    save();
-            //});
             window.onbeforeunload = function() { save(); }; // apparently this is the way to do it...
 
         } else {
