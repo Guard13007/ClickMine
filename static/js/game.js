@@ -23,6 +23,21 @@ var Actions = {
         uses: {sticks: 2, wooden_planks: 3},
         label: "make a wooden axe",
     },
+    wooden_pickaxes: {
+        requires: {crafting_tables: 1},
+        uses: {sticks: 2, wooden_planks: 3},
+        label: "make a wooden pickaxe",
+    },
+    wooden_shovels: {
+        requires: {crafting_tables: 1},
+        uses: {sticks: 2, wooden_planks: 1},
+        label: "make a wooden shovel",
+    },
+    wooden_swords: {
+        requires: {crafting_tables: 1},
+        uses: {sticks: 1, wooden_planks: 2},
+        label: "make a wooden sword",
+    },
 };
 
 // These are displayed under "have..." when available
