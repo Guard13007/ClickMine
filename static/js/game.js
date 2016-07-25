@@ -186,6 +186,9 @@ $(document).ready(function() {
         if (!Actions[action].count) {
             Actions[action].count = 1;
         }
+        if (!Actions[action].singular_name) {
+            Actions[action].singular_name = false;
+        }
 
         for (resource in Actions[action].uses) {
             str_resource = resource + "";
