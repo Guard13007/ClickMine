@@ -46,6 +46,10 @@ var Actions = {
     dirt: { //NOTE technically possible without shovel...
         //requires: {wooden_shovels: 1},
         label: "dig",
+        //random: {gravel: 1/30, clay: 1/60}, // gravel/clay should be singular but not have an action...
+        //TODO resource definitions have to be separate from actual resources that you have!!
+        // finish the listing of items and blocks before continuing to create them, then
+        //  decide how to handle the properties and uses and methods that different things should have
         singular_name: true,
     },
 };
