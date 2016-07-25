@@ -54,4 +54,8 @@ import create_table, types, add_column, drop_column, drop_table, rename_table fr
         add_column "resources", "wooden_pickaxes", types.integer default: 0
         add_column "resources", "wooden_shovels", types.integer default: 0
         add_column "resources", "wooden_swords", types.integer default: 0
+
+    [9]: =>
+        add_column "resources", "cobblestone", types.integer default: 0
+        add_column "resources", "dirt", types.integer default: 0
 }

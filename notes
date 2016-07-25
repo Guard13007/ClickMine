@@ -1,0 +1,6 @@
+- saving and loading from localstorage as backup, with timestamp
+- things take time to do
+- saving needs to make everything an integer before saving
+- resource usage in mining / cutting down a tree past punching
+- punching should be replaced once have axe
+- tool types to use...

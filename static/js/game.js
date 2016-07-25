@@ -2,7 +2,7 @@
 var Actions = {
     logs: {
         label: "punch a tree",
-        random: {saplings: 1/6, apples: 1/30},
+        random: {saplings: 1/6, apples: 1/20},
     },
     wooden_planks: {
         uses: {logs: 1},
@@ -37,6 +37,16 @@ var Actions = {
         requires: {crafting_tables: 1},
         uses: {sticks: 1, wooden_planks: 2},
         label: "make a wooden sword",
+    },
+    cobblestone: {
+        requires: {wooden_pickaxes: 1},
+        label: "go mining",
+        singular_name: true,
+    },
+    dirt: { //NOTE technically possible without shovel...
+        //requires: {wooden_shovels: 1},
+        label: "dig",
+        singular_name: true,
     },
 };
 
@@ -93,7 +103,7 @@ function updateResourcesDisplay(resource_name) {
     // <li id='r_NAME'># NAME(s)</li>
     if (Resources[resource_name] > 0) {
         output = "<li id='r_" + resource_name + "'>" + Resources[resource_name] + " " + resource_name.replace("_", " ");
-        if (Resources[resource_name] == 1) {
+        if ((Resources[resource_name] == 1) and !Resources[resource_name].singular_name) {
             output = output.substring(0, output.length - 1);
         }
 
