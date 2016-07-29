@@ -2,4 +2,6 @@
 *_temp/
 logs/
 nginx.conf.compiled
+ClickMine.service
+dhparams.pem
 secret.moon
