@@ -39,7 +39,7 @@ var Actions = {
         label: "make a wooden sword",
     },
     cobblestone: {
-        requires: {wooden_pickaxes: 1},
+        or_requires: {wooden_pickaxes: 1, stone_pickaxes: 1},
         label: "go mining",
         singular_name: true,
         fn: function() {
@@ -62,18 +62,27 @@ var Actions = {
             // stone_pickaxes, iron_pickaxes, gold_pickaxes, diamond_pickaxes
         },
     },
-    dirt: { //NOTE technically possible without shovel...
-        //requires: {wooden_shovels: 1},
+    dirt: {
         label: "dig",
         //random: {gravel: 1/30, clay: 1/60}, // gravel/clay should be singular but not have an action...
         //TODO resource definitions have to be separate from actual resources that you have!!
         // finish the listing of items and blocks before continuing to create them, then
         //  decide how to handle the properties and uses and methods that different things should have
         singular_name: true,
+        fn: function() {
+            var dirt = Math.floor(Resources.wooden_shovels / 120);
+            if (Resources.stone_shovels > 0) {
+                dirt += Math.floor(Resources.stone_shovels / 50);
+                if (Math.random() < Math.min(Resources.stone_shovels ^ 0.05 - 1, 0.9)) { // slightly smaller max chance than for coal
+                    gain("gravel", Math.floor(Math.random() * 15) + 1);
+                    gain("flint", Math.floor(Math.random() * 1.2) + 1); // honestly not sure what this chance for 2 flint is :P
+                }
+            }
+        },
     },
     stone_axes: {
         requires: {crafting_tables: 1},
-        user: {sticks: 2, cobblestone: 3},
+        uses: {sticks: 2, cobblestone: 3},
         label: "make a stone axe",
     },
     stone_pickaxes: {
@@ -90,6 +99,25 @@ var Actions = {
         requires: {crafting_tables: 1},
         uses: {sticks: 1, cobblestone: 2},
         label: "make a stone sword",
+    },
+    clay: {
+        label: "dig for clay",
+        count: 4,
+        singular_name: true,
+    },
+    torches: {
+        uses: {sticks: 1, coal: 1},
+        label: "make torches",
+        count: 4,
+    },
+    tree_farms: {
+        requires: {ideas: 5},
+        uses: {saplings: 40, fence_posts: 32, fence_gates: 1, torches: 9},
+        label: "build a tree farm",
+    },
+    ideas: {
+        label: "think of something to build",
+        time: 5,
     },
 };
 
@@ -117,6 +145,20 @@ function updateActionsDisplay(action_name) {
     for (required_resource in Actions[action_name].requires) {
         str_required_resource = required_resource + "";
         if (Resources[str_required_resource] < Actions[action_name].requires[required_resource]) {
+            available = false;
+        }
+    }
+
+    if (available && Actions[action_name].or_requires) {
+        var or_requires_available = false;
+        for (required_resource in Actions[action_name].or_requires) {
+            str_required_resource = required_resource + "";
+            if (Resources[str_required_resource] < Actions[action_name].or_requires[required_resource]) {
+                or_requires_available = true;
+                break;
+            }
+        }
+        if (!or_requires_available) {
             available = false;
         }
     }
@@ -149,6 +191,9 @@ function updateResourcesDisplay(resource_name) {
         output = "<li id='r_" + resource_name + "'>" + Resources[resource_name] + " " + resource_name.replace("_", " ");
         if ((Resources[resource_name] == 1) && Actions[resource_name] && !Actions[resource_name].singular_name) {
             output = output.substring(0, output.length - 1);
+            if (resource_name == "torches") {   // torch instead of torche
+              output = output.substring(0, output.length - 1);
+            }
         }
 
         output += "</li>";
@@ -185,22 +230,24 @@ function act(gained_resource) {
         updateResourcesDisplay(str_used_resource);
     }
 
-    // update gained resource
-    Resources[gained_resource] += Actions[gained_resource].count;
-    updateResourcesDisplay(gained_resource);
+    setTimeout(function() {
+        // update gained resource
+        Resources[gained_resource] += Actions[gained_resource].count;
+        updateResourcesDisplay(gained_resource);
 
-    // check for and get random resources
-    for (random_resource in Actions[gained_resource].random) {
-        if (Math.random() < Actions[gained_resource].random[random_resource]) {
-            str_random_resource = random_resource + "";
-            Resources[str_random_resource] += 1; //hardcoded..not good :/
-            updateResourcesDisplay(str_random_resource);
+        // check for and get random resources
+        for (random_resource in Actions[gained_resource].random) {
+            if (Math.random() < Actions[gained_resource].random[random_resource]) {
+                str_random_resource = random_resource + "";
+                Resources[str_random_resource] += 1; //hardcoded..not good :/
+                updateResourcesDisplay(str_random_resource);
+            }
         }
-    }
 
-    if (Actions[gained_resource].fn) {
-      Actions[gained_resource].fn();
-    }
+        if (Actions[gained_resource].fn) {
+          Actions[gained_resource].fn();
+        }
+    }, Actions[gained_resource].time * 1000);
 
     updateActionsDisplay();
 }
@@ -246,6 +293,9 @@ $(document).ready(function() {
         }
         if (!Actions[action].singular_name) {
             Actions[action].singular_name = false;
+        }
+        if (!Actions[action].time) {
+            Actions[action].time = 1/30;
         }
 
         for (resource in Actions[action].uses) {

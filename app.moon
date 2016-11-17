@@ -67,6 +67,7 @@ class extends lapis.Application
                         a href: @url_for("login"), "log in"
             ul ->
                 li "news..."
+                li "v1.2 - actions require time to execute now, can think of things to build, stuff to be found while digging"
                 li "v1.1 - now has version numbers and coal, merry christmas"
 
     [create_user: "/create_user"]: respond_to {

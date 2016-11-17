@@ -66,4 +66,12 @@ import create_table, types, add_column, drop_column, drop_table, rename_table fr
         add_column "resources", "stone_shovels", types.integer default: 0
         add_column "resources", "stone_swords", types.integer default: 0
         add_column "resources", "coal", types.integer default: 0
+
+    [11]: =>
+        add_column "resources", "gravel", types.integer default: 0
+        add_column "resources", "flint", types.integer default: 0
+        add_column "resources", "clay", types.integer default: 0
+        add_column "resources", "torches", types.integer default: 0
+        add_column "resources", "tree_farms", types.integer default: 0
+        add_column "resources", "ideas", types.integer default: 0
 }
