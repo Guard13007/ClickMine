@@ -74,4 +74,8 @@ import create_table, types, add_column, drop_column, drop_table, rename_table fr
         add_column "resources", "torches", types.integer default: 0
         add_column "resources", "tree_farms", types.integer default: 0
         add_column "resources", "ideas", types.integer default: 0
+
+    [12]: =>
+        add_column "resources", "fence_posts", types.integer default: 0
+        add_column "resources", "fence_gates", types.integer default: 0
 }

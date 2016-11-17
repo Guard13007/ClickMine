@@ -119,6 +119,17 @@ var Actions = {
         label: "think of something to build",
         time: 5,
     },
+    fence_posts: {
+        requires: {crafting_tables: 1},
+        uses: {sticks: 2, wooden_planks: 4},
+        label: "make fence posts",
+        count: 3,
+    },
+    fence_gates: {
+        requires: {crafting_tables: 1},
+        uses: {sticks: 4, wooden_planks: 2},
+        label: "make fence gates",
+    },
 };
 
 // These are displayed under "have..." when available
