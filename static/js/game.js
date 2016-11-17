@@ -47,7 +47,7 @@ var Actions = {
             if (Resources.stone_pickaxes > 0) {
                 cobble += Math.floor(Resources.stone_pickaxes / 50);
                 if (Math.random() < Math.min(Resources.stone_pickaxes ^ 0.05 - 1, 0.95)) { // 100 is 26%, 1000 is 41%, max chance is 95%
-                    gain("coal", Math.floor(Math.random() * 32) + 1);
+                    gain("coal", Math.floor(Math.random() * 15) + 1);
                 }
             }
             if (cobble > 0) {
