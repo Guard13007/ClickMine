@@ -46,7 +46,7 @@ var Actions = {
             var cobble = Math.floor(Resources.wooden_pickaxes / 120);
             if (Resources.stone_pickaxes > 0) {
                 cobble += Math.floor(Resources.stone_pickaxes / 50);
-                if (Math.random() < Math.min(stone_pickaxes ^ 0.1 - 1, 0.99)) { // 1000 is roughly 99% chance
+                if (Math.random() < Math.min(Resources.stone_pickaxes ^ 0.1 - 1, 0.99)) { // 1000 is roughly 99% chance
                     gain("coal", Math.floor(Math.random() * 32) + 1);
                 }
             }
@@ -60,7 +60,6 @@ var Actions = {
             // some chance of breaking pickaxes that goes up with count (but is less than duplication chance), and is less with better pickaxes
 
             // stone_pickaxes, iron_pickaxes, gold_pickaxes, diamond_pickaxes
-            console.log("fn() called...");
         },
     },
     dirt: { //NOTE technically possible without shovel...
