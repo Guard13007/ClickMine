@@ -3,6 +3,7 @@ var Actions = {
     logs: {
         label: "punch a tree",
         random: {saplings: 1/6, apples: 1/20},
+        time: 1/15,
     },
     wooden_planks: {
         uses: {logs: 1},
@@ -61,6 +62,7 @@ var Actions = {
 
             // stone_pickaxes, iron_pickaxes, gold_pickaxes, diamond_pickaxes
         },
+        time: 2,
     },
     dirt: {
         label: "dig",
@@ -79,6 +81,7 @@ var Actions = {
                 }
             }
         },
+        time: 2,
     },
     stone_axes: {
         requires: {crafting_tables: 1},
@@ -104,6 +107,7 @@ var Actions = {
         label: "dig for clay",
         count: 4,
         singular_name: true,
+        time: 4,
     },
     torches: {
         uses: {sticks: 1, coal: 1},
@@ -114,6 +118,7 @@ var Actions = {
         requires: {ideas: 5},
         uses: {saplings: 40, fence_posts: 32, fence_gates: 1, torches: 9},
         label: "build a tree farm",
+        time: 60,
     },
     ideas: {
         label: "think of something to build",
