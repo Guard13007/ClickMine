@@ -176,7 +176,7 @@ function updateActionsDisplay(action_name) {
 
     // if available, and not already there, add it
     if (available && ($("#a_" + action_name).length == 0)) {
-        $("#do").append("<li id='a_" + action_name + "'><a href='#' onclick='act(\"" + action_name + "\")'>" + Actions[action_name].label + "</a></li>");
+        $("#do").append("<li id='a_" + action_name + "'><a href='javascript:act(\"" + action_name + "\")'>" + Actions[action_name].label + "</a></li>");
     }
 
     // if there, and not available, remove it
@@ -334,7 +334,7 @@ $(document).ready(function() {
             updateActionsDisplay();
             updateResourcesDisplay();
 
-            $("#account").append("<li><a href='#'>save</a>").click(function() { save(); });
+            $("#account").append("<li><a href='javascript:save();'>save</a>");
 
             setTimeout(saveLoop, 60000);
 
