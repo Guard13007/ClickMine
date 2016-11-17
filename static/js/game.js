@@ -42,6 +42,25 @@ var Actions = {
         requires: {wooden_pickaxes: 1},
         label: "go mining",
         singular_name: true,
+        fn: function() {
+            var cobble = Math.floor(Resources.wooden_pickaxes / 120);
+            if (Resources.stone_pickaxes > 0) {
+                cobble += Math.floor(Resources.stone_pickaxes / 50);
+                if (Math.random() < Math.min(stone_pickaxes ^ 0.1 - 1, 0.99)) { // 1000 is roughly 99% chance
+                    gain("coal", Math.floor(Math.random() * 32) + 1);
+                }
+            }
+            if (cobble > 0) {
+                gain("cobblestone", cobble);
+            }
+            //if (Resources.wooden_pickaxes)
+            //  stone_pickaxes / X = + cobble
+            //     diff x per type, rarer = more bonus
+            //  max of (stone_pickaxes ^ 0.1 - 1 and 1) is percent chance of duplication of everything
+            // some chance of breaking pickaxes that goes up with count (but is less than duplication chance), and is less with better pickaxes
+
+            // stone_pickaxes, iron_pickaxes, gold_pickaxes, diamond_pickaxes
+        },
     },
     dirt: { //NOTE technically possible without shovel...
         //requires: {wooden_shovels: 1},
@@ -52,12 +71,33 @@ var Actions = {
         //  decide how to handle the properties and uses and methods that different things should have
         singular_name: true,
     },
+    stone_axes: {
+        requires: {crafting_tables: 1},
+        user: {sticks: 2, cobblestone: 3},
+        label: "make a stone axe",
+    },
+    stone_pickaxes: {
+        require: {crafting_tables: 1},
+        uses: {sticks: 2, cobblestone: 3},
+        label: "make a stone pickaxe",
+    },
+    stone_shovels: {
+        requires: {crafting_tables: 1},
+        uses: {sticks: 2, cobblestone: 1},
+        label: "make a stone shovel",
+    },
+    stone_swords: {
+        requires: {crafting_tables: 1},
+        uses: {sticks: 1, cobblestone: 2},
+        label: "make a stone sword",
+    },
 };
 
 // These are displayed under "have..." when available
 var Resources = {
-    saplings: 0,
+    saplings: 0, // these ones are here manually, the rest are added on load
     apples: 0,
+    coal: 0,
 };
 
 // Updates displayed Actions under "do..."
@@ -125,6 +165,16 @@ function updateResourcesDisplay(resource_name) {
     }
 }
 
+function gain(resource, count) {
+    if (!count) {
+        count = 1;
+    }
+
+    resource = resource + ""; // this is just in case I pass a non-string...
+    Resources[resource] += count;
+    updateResourcesDisplay(resource);
+}
+
 // Called by clickable items under "do..."
 function act(gained_resource) {
     for (used_resource in Actions[gained_resource].uses) {
@@ -146,6 +196,10 @@ function act(gained_resource) {
             Resources[str_random_resource] += 1; //hardcoded..not good :/
             updateResourcesDisplay(str_random_resource);
         }
+    }
+
+    if (Actions[gained_resource].fn) {
+      Actions[gained_resource].fn();
     }
 
     updateActionsDisplay();

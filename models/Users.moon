@@ -18,13 +18,6 @@ class Users extends Model
 			lower = value\lower!
 			if (lower == "admin") or (lower == "administrator") or (lower == "new")
 				return "That username is already taken."
-
-		password: (value) =>
-			if #value == 0
-				return "You must have a password."
-
-			if #value < 8
-				return "Your password must be at least 8 characters."
 	}
 
     @relations: {
