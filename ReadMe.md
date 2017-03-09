@@ -1,7 +1,9 @@
 ## Installation
 
 1. Run `install.sh` on an Ubuntu server (16.04 last tested I believe).
+
 2. Put this in your NGINX http block:
+
    ```
    server {
      listen 80;
