@@ -30,7 +30,11 @@ class extends lapis.Application
                     resources.user_id = nil
                     return json: resources
 
-            return json: { status: "invalid request" }, status: 400
+                else
+                    return json: { status: "not logged in" }, status: 401
+
+            else
+                return json: { status: "invalid request" }, status: 400
     }
 
     [update: "/update"]: respond_to {
@@ -44,7 +48,11 @@ class extends lapis.Application
                     resources\update @params.resources
                     return json: { status: "success" }
 
-            return json: { status: "server failure" }, status: 500
+                else
+                    return json: { status: "not logged in" }, status: 401
+
+            else
+                return json: { status: "server failure" }, status: 500
     }
 
     [index: "/"]: =>
