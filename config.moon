@@ -6,7 +6,7 @@ config "production", ->
     secret session_secret
     postgres ->
         host "127.0.0.1"
-        user "postgres"
+        user "clickmine"
         password sql_password
         database "clickmine"
     port 8078
